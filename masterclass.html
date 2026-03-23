@@ -67,7 +67,7 @@
 
     <div class="field">
       <label class="field-label" id="labelEvent">📅 Scegli un evento disponibile *</label>
-      <div class="events-list" id="eventsList"><div class="event-card" onclick="selectEvent(0,this)"><div class="event-icon">📅</div><div class="event-info"><div class="event-date">1 Nov '26</div><div class="event-time">ore 21</div><div class="event-loc">📍 Stadio San Siro - Milano</div></div></div></div>
+      <div class="events-list" id="eventsList"><div class="event-card" onclick="selectEvent(0,this)"><div class="event-icon">📅</div><div class="event-info"><div class="event-date">1 Dic '26</div><div class="event-time">ore 21</div><div class="event-loc">📍 Napoli</div></div></div></div>
       <input type="hidden" id="fEvent">
     </div>
 
@@ -140,7 +140,7 @@
       <div class="admin-section">
         <div class="admin-section-title">📅 Eventi disponibili</div>
         <p style="font-size:0.73rem;color:#3a6070;margin-bottom:10px;">Ogni evento ha data (gg-mm-aa), orario e location. Appare come: 6 Giu '26 · ore 18:00 · Villa Tasca</p>
-        <div class="events-admin-list" id="adminEventsList"><div class="event-admin-row" id="evrow0"><div class="event-admin-grid"><div><span class="event-admin-label">Data (gg-mm-aa)</span><input class="event-admin-input" value="01-11-26" placeholder="06-06-26" oninput="cfg.events[0].data=this.value"></div><div><span class="event-admin-label">Orario</span><input class="event-admin-input" value="21" placeholder="18:00" oninput="cfg.events[0].ora=this.value"></div></div><div style="margin-bottom:6px"><span class="event-admin-label">Location</span><input class="event-admin-input" value="Stadio San Siro - Milano" placeholder="Villa Tasca, Palermo" oninput="cfg.events[0].location=this.value"></div><button class="event-del" onclick="removeEvent(0)">Elimina evento</button></div><div class="event-admin-row" id="evrow1"><div class="event-admin-grid"><div><span class="event-admin-label">Data (gg-mm-aa)</span><input class="event-admin-input" value="" placeholder="06-06-26" oninput="cfg.events[1].data=this.value"></div><div><span class="event-admin-label">Orario</span><input class="event-admin-input" value="" placeholder="18:00" oninput="cfg.events[1].ora=this.value"></div></div><div style="margin-bottom:6px"><span class="event-admin-label">Location</span><input class="event-admin-input" value="" placeholder="Villa Tasca, Palermo" oninput="cfg.events[1].location=this.value"></div><button class="event-del" onclick="removeEvent(1)">Elimina evento</button></div></div>
+        <div class="events-admin-list" id="adminEventsList"><div class="event-admin-row" id="evrow0"><div class="event-admin-grid"><div><span class="event-admin-label">Data (gg-mm-aa)</span><input class="event-admin-input" value="01-12-26" placeholder="06-06-26" oninput="cfg.events[0].data=this.value"></div><div><span class="event-admin-label">Orario</span><input class="event-admin-input" value="21" placeholder="18:00" oninput="cfg.events[0].ora=this.value"></div></div><div style="margin-bottom:6px"><span class="event-admin-label">Location</span><input class="event-admin-input" value="Napoli" placeholder="Villa Tasca, Palermo" oninput="cfg.events[0].location=this.value"></div><button class="event-del" onclick="removeEvent(0)">Elimina evento</button></div><div class="event-admin-row" id="evrow1"><div class="event-admin-grid"><div><span class="event-admin-label">Data (gg-mm-aa)</span><input class="event-admin-input" value="" placeholder="06-06-26" oninput="cfg.events[1].data=this.value"></div><div><span class="event-admin-label">Orario</span><input class="event-admin-input" value="" placeholder="18:00" oninput="cfg.events[1].ora=this.value"></div></div><div style="margin-bottom:6px"><span class="event-admin-label">Location</span><input class="event-admin-input" value="" placeholder="Villa Tasca, Palermo" oninput="cfg.events[1].location=this.value"></div><button class="event-del" onclick="removeEvent(1)">Elimina evento</button></div></div>
         <button class="add-event-btn" onclick="addEvent()">+ Aggiungi evento</button>
       </div>
 
@@ -202,9 +202,9 @@ var cfg = {
   "max": 10,
   "events": [
     {
-      "data": "01-11-26",
+      "data": "01-12-26",
       "ora": "21",
-      "location": "Stadio San Siro - Milano"
+      "location": "Napoli"
     }
   ],
   "payments": {
@@ -831,4 +831,5 @@ document.addEventListener('dragstart',function(e){e.preventDefault();return fals
 </script>
 
 
-</div></body></html>
+</div>
+</body></html>
