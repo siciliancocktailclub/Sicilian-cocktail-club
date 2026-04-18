@@ -44,6 +44,7 @@
       padding:1.4rem 2rem;
     }
     .logo-img{height:70px;width:auto;}
+    .header-right{display:flex;align-items:center;gap:10px;}
     .back-btn{
       display:flex;align-items:center;gap:6px;
       text-decoration:none;
@@ -55,6 +56,23 @@
       transition:background 0.2s,border-color 0.2s;
     }
     .back-btn:hover{background:rgba(201,168,76,0.12);border-color:var(--gold);}
+
+    /* CART BUTTON */
+    .cart-btn{
+      display:flex;align-items:center;gap:8px;
+      background:var(--gold);color:#0d0d0d;border:none;
+      border-radius:40px;padding:9px 18px;
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.78rem;font-weight:700;letter-spacing:0.12em;
+      cursor:pointer;transition:background 0.2s;white-space:nowrap;
+    }
+    .cart-btn:hover{background:var(--gold-light);}
+    .cart-count{
+      background:#0d0d0d;color:var(--gold);
+      border-radius:50%;width:20px;height:20px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.72rem;font-weight:700;
+    }
 
     /* HERO */
     .hero{
@@ -81,37 +99,25 @@
     }
     .divider{width:48px;height:1px;background:var(--gold);margin:0 auto 2.4rem;}
 
-    /* LOADING STATE */
+    /* LOADING / ERROR */
     .wines-loading{
       position:relative;z-index:1;
-      width:100%;max-width:1100px;
-      padding:2rem;
-      text-align:center;
-      color:var(--muted);
+      width:100%;max-width:1100px;padding:2rem;
+      text-align:center;color:var(--muted);
       font-family:'PT Serif',serif;font-variant:small-caps;
       font-size:0.85rem;letter-spacing:0.1em;
     }
     .loading-spinner{
       display:inline-block;width:24px;height:24px;
-      border:2px solid rgba(201,168,76,0.2);
-      border-top-color:var(--gold);
-      border-radius:50%;
-      animation:spin 0.8s linear infinite;
-      margin-bottom:0.8rem;
+      border:2px solid rgba(201,168,76,0.2);border-top-color:var(--gold);
+      border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:0.8rem;
     }
     @keyframes spin{to{transform:rotate(360deg);}}
-
-    /* ERROR STATE */
     .wines-error{
-      position:relative;z-index:1;
-      width:100%;max-width:600px;
-      padding:2rem;
-      text-align:center;
-      background:rgba(192,57,43,0.1);
-      border:1px solid rgba(192,57,43,0.3);
-      border-radius:4px;
-      margin:1rem 2rem;
-      color:#e07060;
+      position:relative;z-index:1;width:100%;max-width:600px;
+      padding:2rem;text-align:center;
+      background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.3);
+      border-radius:4px;margin:1rem 2rem;color:#e07060;
       font-family:'PT Serif',serif;font-variant:small-caps;
       font-size:0.85rem;line-height:1.6;
     }
@@ -132,10 +138,10 @@
       background:var(--card-bg);
       border:1px solid rgba(201,168,76,0.18);
       border-radius:2px;
-      cursor:pointer;position:relative;
+      position:relative;
       transition:border-color 0.3s,transform 0.3s,background 0.3s;
       opacity:0;
-      text-decoration:none;display:flex;flex-direction:column;
+      display:flex;flex-direction:column;
       overflow:hidden;
     }
     .wine-card.visible{animation:fadeUp 0.9s ease both;}
@@ -147,33 +153,24 @@
     .wine-card:hover{border-color:rgba(201,168,76,0.55);background:#8ab8d0;transform:translateY(-4px);}
     .wine-card:hover::before{opacity:1;}
 
-    /* BOTTLE THUMBNAIL */
     .wine-thumb{
-      width:100%;
-      height:200px;
-      object-fit:contain;
-      object-position:center center;
-      display:block;
-      background:#7ab0c8;
-      padding:12px 0;
+      width:100%;height:200px;
+      object-fit:contain;object-position:center center;
+      display:block;background:#7ab0c8;padding:12px 0;
       transition:transform 0.4s ease;
     }
     .wine-card:hover .wine-thumb{transform:scale(1.04);}
-
-    /* Placeholder quando non c'è immagine */
     .wine-thumb-placeholder{
       width:100%;height:200px;
       background:linear-gradient(160deg,#7ab0c8 0%,#5a90a8 100%);
       display:flex;align-items:center;justify-content:center;
-      font-size:3.5rem;
-      flex-shrink:0;
+      font-size:3.5rem;flex-shrink:0;
     }
 
     .wine-card-body{
-      padding:1.6rem 1.6rem 1.8rem;
+      padding:1.4rem 1.4rem 1.2rem;
       display:flex;flex-direction:column;flex:1;
     }
-
     .wine-type{
       font-family:'PT Serif',serif;font-variant:small-caps;
       font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;
@@ -187,7 +184,11 @@
     .wine-desc{
       font-family:'PT Serif',serif;font-variant:small-caps;
       font-size:0.78rem;font-weight:700;letter-spacing:0.05em;
-      color:var(--muted);line-height:1.5;margin-bottom:1.1rem;flex:1;
+      color:var(--muted);line-height:1.5;margin-bottom:1rem;flex:1;
+    }
+    .wine-footer{
+      display:flex;align-items:center;justify-content:space-between;gap:8px;
+      margin-top:auto;
     }
     .wine-price{
       font-family:'PT Serif',serif;font-variant:small-caps;
@@ -195,13 +196,21 @@
     }
     .wine-badge{
       display:inline-block;
-      background:rgba(201,168,76,0.15);
-      border:1px solid rgba(201,168,76,0.3);
+      background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);
       border-radius:20px;padding:3px 10px;
       font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;
-      color:var(--gold);margin-bottom:0.8rem;
-      align-self:flex-start;
+      color:var(--gold);margin-bottom:0.8rem;align-self:flex-start;
     }
+    .add-wine-btn{
+      background:var(--gold);color:#0d0d0d;border:none;
+      border-radius:4px;width:34px;height:34px;
+      font-size:1.2rem;font-weight:700;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:background 0.2s,transform 0.1s;flex-shrink:0;position:relative;z-index:2;
+    }
+    .add-wine-btn:hover{background:var(--gold-light);}
+    .add-wine-btn:active{transform:scale(0.92);}
+    .add-wine-btn.in-cart{background:#4caf7d;color:#fff;}
 
     /* CTA SECTION */
     .cta-section{
@@ -211,29 +220,13 @@
       text-align:center;
       animation:fadeUp 0.9s 1s ease both;opacity:0;
     }
-    .cta-box{
-      background:var(--card-bg);
-      border:1px solid rgba(201,168,76,0.25);
-      border-radius:4px;padding:2.5rem 2rem;
-    }
-    .cta-title{
-      font-family:'PT Serif',serif;font-variant:small-caps;
-      font-size:1.4rem;font-weight:700;color:var(--text);
-      margin-bottom:0.6rem;
-    }
-    .cta-sub{
-      font-family:'PT Serif',serif;font-variant:small-caps;
-      font-size:0.82rem;font-weight:700;letter-spacing:0.05em;
-      color:var(--muted);line-height:1.6;margin-bottom:1.6rem;
-    }
+    .cta-box{background:var(--card-bg);border:1px solid rgba(201,168,76,0.25);border-radius:4px;padding:2.5rem 2rem;}
+    .cta-title{font-family:'PT Serif',serif;font-variant:small-caps;font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;}
+    .cta-sub{font-family:'PT Serif',serif;font-variant:small-caps;font-size:0.82rem;font-weight:700;letter-spacing:0.05em;color:var(--muted);line-height:1.6;margin-bottom:1.6rem;}
     .cta-btn{
-      display:inline-block;
-      background:var(--gold);color:#0d0d0d;
-      text-decoration:none;
-      font-family:'PT Serif',serif;font-variant:small-caps;
-      font-size:0.82rem;font-weight:700;letter-spacing:0.2em;
-      padding:14px 32px;border-radius:2px;
-      transition:background 0.25s,letter-spacing 0.25s;
+      display:inline-block;background:var(--gold);color:#0d0d0d;text-decoration:none;
+      font-family:'PT Serif',serif;font-variant:small-caps;font-size:0.82rem;font-weight:700;letter-spacing:0.2em;
+      padding:14px 32px;border-radius:2px;transition:background 0.25s,letter-spacing 0.25s;
     }
     .cta-btn:hover{background:var(--gold-light);letter-spacing:0.28em;}
 
@@ -255,7 +248,209 @@
     .lang-btn.active{background:var(--gold);color:#0d0d0d;}
     .lang-divider{width:1px;height:18px;background:rgba(201,168,76,0.25);}
 
+    /* ═══ CART OVERLAY + PANEL ═══ */
+    .cart-overlay{
+      display:none;position:fixed;inset:0;
+      background:rgba(0,0,0,0.75);z-index:200;
+    }
+    .cart-overlay.open{display:block;}
+    .cart-panel{
+      position:fixed;top:0;right:0;
+      width:min(460px,100vw);height:100vh;
+      background:#1a1a1a;border-left:1px solid rgba(201,168,76,0.2);
+      z-index:201;display:flex;flex-direction:column;
+      transform:translateX(100%);transition:transform 0.3s ease;overflow:hidden;
+    }
+    .cart-panel.open{transform:translateX(0);}
+    .cart-head{
+      padding:16px 20px;border-bottom:1px solid rgba(201,168,76,0.15);
+      display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
+    }
+    .cart-head h2{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      color:var(--gold);font-size:1.05rem;letter-spacing:0.12em;
+    }
+    .close-btn{
+      background:transparent;border:none;color:var(--muted);
+      font-size:1.4rem;cursor:pointer;transition:color 0.2s;
+    }
+    .close-btn:hover{color:var(--text);}
+
+    /* STEPS */
+    .cart-step{display:none;flex-direction:column;flex:1;overflow:hidden;}
+    .cart-step.active{display:flex;}
+
+    /* STEP 1 — items */
+    .cart-items{flex:1;overflow-y:auto;padding:12px 20px;}
+    .cart-empty{
+      text-align:center;padding:48px 0;color:var(--muted);
+      font-family:'PT Serif',serif;font-variant:small-caps;font-size:0.86rem;
+    }
+    .cart-empty .empty-icon{font-size:2.8rem;margin-bottom:10px;}
+    .cart-item{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 0;border-bottom:1px solid rgba(201,168,76,0.1);gap:9px;
+    }
+    .cart-item-info{flex:1;}
+    .cart-item-name{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.9rem;color:var(--text);
+    }
+    .cart-item-detail{font-size:0.74rem;color:var(--muted);margin-top:2px;}
+    .cart-item-price{font-weight:700;color:var(--gold);font-size:0.9rem;white-space:nowrap;}
+    .cart-item-remove{
+      background:transparent;border:none;color:#5a4a4a;
+      cursor:pointer;font-size:0.95rem;transition:color 0.2s;padding:4px;
+    }
+    .cart-item-remove:hover{color:var(--red);}
+    .cart-footer-s1{
+      padding:15px 20px;border-top:1px solid rgba(201,168,76,0.15);flex-shrink:0;
+    }
+    .cart-total{
+      display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
+    }
+    .cart-total-label{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.88rem;color:var(--muted);
+    }
+    .cart-total-amount{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:1.3rem;color:var(--gold);font-weight:700;
+    }
+    .proceed-btn{
+      width:100%;padding:13px;background:var(--gold);color:#0d0d0d;
+      border:none;border-radius:4px;
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-weight:700;font-size:0.88rem;letter-spacing:0.1em;
+      cursor:pointer;transition:background 0.2s;
+    }
+    .proceed-btn:hover{background:var(--gold-light);}
+    .proceed-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+    /* STEP 2 — form */
+    .cart-form-wrap{flex:1;overflow-y:auto;padding:15px 20px;}
+    .form-section-title{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      color:var(--gold);font-size:0.95rem;margin-bottom:3px;letter-spacing:0.08em;
+    }
+    .form-section-sub{color:var(--muted);font-size:0.74rem;margin-bottom:14px;line-height:1.5;}
+    .form-group{margin-bottom:12px;}
+    .form-label{
+      display:block;font-size:0.65rem;color:var(--muted);
+      letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;
+      font-family:'PT Serif',serif;
+    }
+    .form-input{
+      width:100%;background:#252525;border:1px solid rgba(201,168,76,0.2);
+      border-radius:4px;padding:10px 12px;color:var(--text);
+      font-family:'PT Serif',serif;font-variant:small-caps;font-size:0.86rem;
+      transition:border-color 0.2s;outline:none;
+    }
+    .form-input:focus{border-color:var(--gold);}
+    .form-input::placeholder{color:var(--muted);}
+    select.form-input{
+      appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%238a8070'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;
+      background-color:#252525;
+    }
+    select.form-input option{background:#252525;color:var(--text);}
+    textarea.form-input{resize:vertical;min-height:58px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+    .delivery-notice{
+      background:#252525;border:1px solid rgba(201,168,76,0.15);
+      border-left:3px solid var(--gold);border-radius:4px;
+      padding:10px 13px;font-size:0.75rem;color:var(--muted);line-height:1.6;margin-bottom:14px;
+    }
+    .delivery-notice strong{color:var(--gold-light);}
+
+    /* PAYMENT OPTIONS */
+    .pay-label-form{
+      font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;
+      text-transform:uppercase;margin-bottom:7px;margin-top:13px;
+      display:block;font-family:'PT Serif',serif;
+    }
+    .pay-options-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:13px;}
+    .pay-opt{
+      display:flex;align-items:center;gap:10px;
+      background:#252525;border:1px solid rgba(201,168,76,0.15);
+      border-radius:4px;padding:10px 13px;cursor:pointer;transition:border-color 0.2s;
+    }
+    .pay-opt:hover{border-color:var(--gold);}
+    .pay-opt.selected{border-color:var(--gold);}
+    .pay-opt input[type="radio"]{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;cursor:pointer;}
+    .pay-opt-label{font-size:0.85rem;color:var(--text);cursor:pointer;font-family:'PT Serif',serif;font-variant:small-caps;}
+
+    /* PAY DETAIL (QR / info) */
+    .pay-detail{
+      display:none;margin:-4px 0 4px 0;padding:10px 13px;
+      background:#1e1e1e;border:1px solid rgba(201,168,76,0.15);
+      border-top:none;border-radius:0 0 4px 4px;
+      font-size:0.78rem;color:var(--muted);line-height:1.6;
+    }
+
+    .submit-btn{
+      width:100%;padding:13px;background:var(--gold);color:#0d0d0d;
+      border:none;border-radius:4px;
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-weight:700;font-size:0.88rem;letter-spacing:0.1em;
+      cursor:pointer;transition:background 0.2s;margin-top:4px;
+    }
+    .submit-btn:hover{background:var(--gold-light);}
+    .go-back-btn{
+      width:100%;padding:10px;background:transparent;color:var(--muted);
+      border:1px solid rgba(201,168,76,0.2);border-radius:4px;
+      font-family:'PT Serif',serif;font-variant:small-caps;font-size:0.8rem;
+      cursor:pointer;margin-top:7px;transition:all 0.2s;
+    }
+    .go-back-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+    /* MODAL CONFERMA */
+    .modal-overlay{
+      display:none;position:fixed;inset:0;
+      background:rgba(0,0,0,0.88);z-index:300;
+      align-items:center;justify-content:center;
+    }
+    .modal-overlay.open{display:flex;}
+    .modal{
+      background:#1a1a1a;border:1px solid rgba(201,168,76,0.25);
+      border-radius:8px;padding:36px 32px;
+      max-width:360px;width:90%;text-align:center;
+      animation:popIn 0.3s ease;
+    }
+    @keyframes popIn{from{transform:scale(0.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+    .modal-icon{font-size:3rem;margin-bottom:12px;}
+    .modal h2{font-family:'PT Serif',serif;font-variant:small-caps;color:var(--gold);font-size:1.4rem;margin-bottom:10px;}
+    .modal p{color:var(--muted);font-size:0.84rem;line-height:1.6;margin-bottom:22px;}
+    .modal-close-btn{
+      background:var(--gold);color:#0d0d0d;border:none;
+      padding:11px 28px;border-radius:4px;
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-weight:700;font-size:0.85rem;cursor:pointer;transition:background 0.2s;
+    }
+    .modal-close-btn:hover{background:var(--gold-light);}
+
+    /* TOAST */
+    .toast{
+      position:fixed;bottom:20px;left:50%;
+      transform:translateX(-50%) translateY(80px);
+      background:#1a1a1a;border:1px solid var(--gold);color:var(--gold);
+      padding:9px 20px;border-radius:24px;font-size:0.82rem;
+      z-index:500;transition:transform 0.3s ease;white-space:nowrap;
+      font-family:'PT Serif',serif;font-variant:small-caps;
+    }
+    .toast.show{transform:translateX(-50%) translateY(0);}
+
+    ::-webkit-scrollbar{width:4px;}
+    ::-webkit-scrollbar-track{background:var(--dark2);}
+    ::-webkit-scrollbar-thumb{background:#3a3530;border-radius:2px;}
+
     @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:480px){
+      .form-row{grid-template-columns:1fr;}
+      .lang-switcher{top:10px;right:10px;padding:5px 10px;}
+    }
   </style>
 </head>
 <body>
@@ -274,7 +469,10 @@
 <!-- HEADER -->
 <header class="site-header">
   <img class="logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HSuDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAAYdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCA1LjEuOBtp6qgAAAC2ZVhJZklJKgAIAAAABQAaAQUAAQAAAEoAAAAbAQUAAQAAAFIAAAAoAQMAAQAAAAIAAAAxAQIAEAAAAFoAAABphwQAAQAAAGoAAAAAAAAA8nYBAOgDAADydgEA6AMAAFBhaW50Lk5FVCA1LjEuOAADAACQBwAEAAAAMDIzMAGgAwABAAAAAQAAAAWgBAABAAAAlAAAAAAAAAACAAEAAgAEAAAAUjk4AAIABwAEAAAAMDEwMAAAAADMbhZ8SlPoHAAA/r9JREFUeF7..." alt="Sicilian Cocktail Club" onerror="this.style.display='none'">
-  <a class="back-btn" href="index.html" id="backBtn">← Torna alla Home</a>
+  <div class="header-right">
+    <button class="cart-btn" onclick="openCart()">🛒 <span id="cartLabel">Carrello</span> <span class="cart-count" id="cartCount">0</span></button>
+    <a class="back-btn" href="index.html" id="backBtn">← Torna alla Home</a>
+  </div>
 </header>
 
 <!-- HERO -->
@@ -296,61 +494,245 @@
   ⚠️ Impossibile caricare i vini. Controlla la connessione o le credenziali Supabase.
 </div>
 
-<!-- WINES GRID (popolata dinamicamente) -->
+<!-- WINES GRID -->
 <section class="wines-grid" id="winesGrid" style="display:none;"></section>
 
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-box">
     <div class="cta-title" id="ctaTitle">Vuoi ordinare per il tuo soggiorno?</div>
-    <div class="cta-sub" id="ctaSub">Contattaci almeno 24 ore prima del check-in per ricevere i vini direttamente in camera. Spedizione gratuita per soggiorni di 3+ notti.</div>
+    <div class="cta-sub" id="ctaSub">Seleziona i vini che desideri e procedi con l'ordine. Consegna in camera per il tuo arrivo.</div>
     <a class="cta-btn" href="mailto:wine@siciliancocktailclub.it" id="ctaBtn">Contattaci →</a>
   </div>
 </section>
 
+<!-- ═══ CART OVERLAY + PANEL ═══ -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-head">
+    <h2 id="cartTitle">Il tuo ordine</h2>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+
+  <!-- STEP 1: riepilogo -->
+  <div class="cart-step active" id="step1">
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty"><div class="empty-icon">🍷</div><span id="cartEmptyText">Il carrello è vuoto.<br>Aggiungi i tuoi vini!</span></div>
+    </div>
+    <div class="cart-footer-s1">
+      <div class="cart-total">
+        <span class="cart-total-label" id="totalLabel">Totale</span>
+        <span class="cart-total-amount" id="cartTotal">€0.00</span>
+      </div>
+      <button class="proceed-btn" id="proceedBtn" onclick="goToStep2()" disabled id="proceedBtn">
+        <span id="proceedText">Continua con l'ordine →</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2: form -->
+  <div class="cart-step" id="step2">
+    <div class="cart-form-wrap">
+      <div class="form-section-title" id="formTitle">Dati per la consegna</div>
+      <div class="form-section-sub" id="formSub">Compila i tuoi dati e scegli data e orario</div>
+
+      <div class="delivery-notice" id="deliveryNotice">
+        🏨 <strong>Consegna in camera.</strong> Indica il numero della tua camera e la data desiderata.
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" id="lblName">Nome e Cognome *</label>
+        <input class="form-input" id="fName" type="text" placeholder="Mario Rossi">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lblEmail">Email *</label>
+        <input class="form-input" id="fEmail" type="email" placeholder="mario@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lblPhone">Cellulare *</label>
+        <input class="form-input" id="fPhone" type="tel" placeholder="+39 333 000 0000">
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lblRoom">Camera / Alloggio *</label>
+        <input class="form-input" id="fRoom" type="text" placeholder="Camera 5">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="lblDate">Data desiderata *</label>
+          <input class="form-input" id="fDate" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="lblTime">Orario *</label>
+          <select class="form-input" id="fTime"><option value="" id="timePh">-- scegli --</option></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="lblNotes">Note / Occasione speciale</label>
+        <textarea class="form-input" id="fNotes" placeholder="Anniversario, compleanno, preferenze..."></textarea>
+      </div>
+
+      <span class="pay-label-form" id="lblPay">Metodo di pagamento *</span>
+      <div class="pay-options-grid" id="payOptionsGrid"></div>
+
+      <button class="submit-btn" onclick="submitOrder()"><span id="submitText">✅ Conferma e invia ordine</span></button>
+      <button class="go-back-btn" onclick="goToStep1()"><span id="backText">← Torna al carrello</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONFERMA -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon">🍷</div>
+    <h2 id="modalTitle">Ordine inviato!</h2>
+    <p id="modalText">Grazie per il tuo ordine. Ti contatteremo presto per confermare la consegna.</p>
+    <button class="modal-close-btn" id="modalCloseBtn" onclick="closeModal()">Chiudi</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script>
-// ─── SUPABASE CONFIG ────────────────────────────────────────────
+// ─── SUPABASE CONFIG ─────────────────────────────────────────────
 const SUPABASE_URL = 'https://rvxfebnlntataowfvpcq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2eGZlYm5sbnRhdGFvd2Z2cGNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0Nzk2MjMsImV4cCI6MjA5MjA1NTYyM30.3ayahnL42tkFnBIrrJpJ2pEyfNz38wqkh5ktQux0GJ4';
 
-// ─── EMOJI FALLBACK per tipo ────────────────────────────────────
 const TIPO_EMOJI = {
-  rosso:    '🍷',
-  bianco:   '🥂',
-  rosato:   '🌹',
-  dolce:    '✨',
-  spumante: '⚡',
-  premium:  '🏆',
+  rosso:'🍷', bianco:'🥂', rosato:'🌹', dolce:'✨', spumante:'⚡', premium:'🏆',
 };
 
-// ─── CARICA VINI DA SUPABASE ────────────────────────────────────
+const ALL_TIMES = ['10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30',
+  '14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30',
+  '18:00','18:30','19:00','19:30','20:00'];
+
+// ─── PAYMENT METHODS ─────────────────────────────────────────────
+const PAYMENT_METHODS = [
+  {id:'CASH',   label:'💵 Contanti',  detail:'Pagamento in contanti alla consegna.'},
+  {id:'Revolut',label:'🔴 Revolut',   detail:'Ti invieremo il link Revolut dopo la conferma.'},
+  {id:'PayPal', label:'🔵 PayPal',    detail:'Ti invieremo il link PayPal dopo la conferma.'},
+];
+
+// ─── STATE ───────────────────────────────────────────────────────
+let cart = [];
+let lang = 'it';
+let selectedPay = null;
+let allWines = [];
+
+// ─── TRADUZIONI ───────────────────────────────────────────────────
+const T = {
+  it:{
+    cartLabel:'Carrello', cartTitle:'Il tuo ordine', totalLabel:'Totale',
+    proceedText:"Continua con l'ordine →",
+    cartEmpty:'Il carrello è vuoto.<br>Aggiungi i tuoi vini!',
+    toast: n => `${n} aggiunto al carrello!`,
+    formTitle:'Dati per la consegna', formSub:'Compila i tuoi dati e scegli data e orario',
+    deliveryNotice:'🏨 <strong>Consegna in camera.</strong> Indica il numero della tua camera e la data desiderata.',
+    lblName:'Nome e Cognome *', lblEmail:'Email *', lblPhone:'Cellulare *',
+    lblRoom:'Camera / Alloggio *', lblDate:'Data desiderata *', lblTime:'Orario *',
+    lblNotes:'Note / Occasione speciale', lblPay:'Metodo di pagamento *',
+    timePh:'-- scegli --',
+    submitText:'✅ Conferma e invia ordine', backText:'← Torna al carrello',
+    modalTitle:'Ordine inviato! 🍷', modalClose:'Chiudi',
+    modalText:(n,d,ti,p,tot) => `Grazie ${n}! Ordine da €${tot} confermato per il ${d} alle ${ti}. Pagamento: ${p}.`,
+    errFields:'Compila tutti i campi obbligatori.', errPay:'Seleziona un metodo di pagamento.',
+    eyebrow:'Selezione Esclusiva', heroTitle:'Wine in B&amp;B',
+    heroSub:'Scopri i migliori vini siciliani selezionati per accompagnare il tuo soggiorno. Dalla Sicilia con amore.',
+    back:'← Torna alla Home',
+    ctaTitle:'Vuoi ordinare per il tuo soggiorno?',
+    ctaSub:'Seleziona i vini che desideri e procedi con l\'ordine. Consegna in camera per il tuo arrivo.',
+    ctaBtn:'Contattaci →',
+    addBtn:'Aggiungi', priceLabel:'/ bottiglia',
+  },
+  en:{
+    cartLabel:'Cart', cartTitle:'Your order', totalLabel:'Total',
+    proceedText:'Proceed to checkout →',
+    cartEmpty:'Your cart is empty.<br>Add your wines!',
+    toast: n => `${n} added to cart!`,
+    formTitle:'Delivery details', formSub:'Fill in your details and choose date and time',
+    deliveryNotice:'🏨 <strong>Room delivery.</strong> Enter your room number and preferred date.',
+    lblName:'Full Name *', lblEmail:'Email *', lblPhone:'Phone *',
+    lblRoom:'Room / Accommodation *', lblDate:'Preferred Date *', lblTime:'Time *',
+    lblNotes:'Notes / Special occasion', lblPay:'Payment method *',
+    timePh:'-- choose --',
+    submitText:'✅ Confirm and send order', backText:'← Back to cart',
+    modalTitle:'Order sent! 🍷', modalClose:'Close',
+    modalText:(n,d,ti,p,tot) => `Thank you ${n}! €${tot} order confirmed for ${d} at ${ti}. Payment: ${p}.`,
+    errFields:'Please fill in all required fields.', errPay:'Please select a payment method.',
+    eyebrow:'Exclusive Selection', heroTitle:'Wine in B&amp;B',
+    heroSub:'Discover the finest Sicilian wines selected to accompany your stay. From Sicily with love.',
+    back:'← Back to Home',
+    ctaTitle:'Want to order for your stay?',
+    ctaSub:'Select the wines you want and proceed with your order. Room delivery for your arrival.',
+    ctaBtn:'Contact us →',
+    addBtn:'Add', priceLabel:'/ bottle',
+  },
+  fr:{
+    cartLabel:'Panier', cartTitle:'Votre commande', totalLabel:'Total',
+    proceedText:'Passer à la commande →',
+    cartEmpty:'Votre panier est vide.<br>Ajoutez vos vins !',
+    toast: n => `${n} ajouté au panier !`,
+    formTitle:'Détails de livraison', formSub:'Remplissez vos coordonnées et choisissez date et heure',
+    deliveryNotice:'🏨 <strong>Livraison en chambre.</strong> Indiquez le numéro de votre chambre et la date souhaitée.',
+    lblName:'Nom et Prénom *', lblEmail:'Email *', lblPhone:'Téléphone *',
+    lblRoom:'Chambre / Logement *', lblDate:'Date souhaitée *', lblTime:'Heure *',
+    lblNotes:'Notes / Occasion spéciale', lblPay:'Mode de paiement *',
+    timePh:'-- choisir --',
+    submitText:'✅ Confirmer et envoyer', backText:'← Retour au panier',
+    modalTitle:'Commande envoyée ! 🍷', modalClose:'Fermer',
+    modalText:(n,d,ti,p,tot) => `Merci ${n} ! Commande de €${tot} confirmée pour le ${d} à ${ti}. Paiement : ${p}.`,
+    errFields:'Veuillez remplir tous les champs.', errPay:'Veuillez sélectionner un mode de paiement.',
+    eyebrow:'Sélection Exclusive', heroTitle:'Wine in B&amp;B',
+    heroSub:'Découvrez les meilleurs vins siciliens sélectionnés pour accompagner votre séjour. De la Sicile avec amour.',
+    back:'← Retour à l\'Accueil',
+    ctaTitle:'Vous souhaitez commander pour votre séjour ?',
+    ctaSub:'Sélectionnez les vins désirés et passez commande. Livraison en chambre à votre arrivée.',
+    ctaBtn:'Contactez-nous →',
+    addBtn:'Ajouter', priceLabel:'/ bouteille',
+  },
+  de:{
+    cartLabel:'Warenkorb', cartTitle:'Ihre Bestellung', totalLabel:'Gesamt',
+    proceedText:'Weiter zur Bestellung →',
+    cartEmpty:'Ihr Warenkorb ist leer.<br>Fügen Sie Weine hinzu!',
+    toast: n => `${n} zum Warenkorb hinzugefügt!`,
+    formTitle:'Lieferdetails', formSub:'Daten eingeben und Datum und Uhrzeit wählen',
+    deliveryNotice:'🏨 <strong>Zimmerlieferung.</strong> Geben Sie Ihre Zimmernummer und das gewünschte Datum an.',
+    lblName:'Vor- und Nachname *', lblEmail:'E-Mail *', lblPhone:'Telefon *',
+    lblRoom:'Zimmer / Unterkunft *', lblDate:'Gewünschtes Datum *', lblTime:'Uhrzeit *',
+    lblNotes:'Notizen / Besonderer Anlass', lblPay:'Zahlungsmethode *',
+    timePh:'-- wählen --',
+    submitText:'✅ Bestätigen und senden', backText:'← Zurück zum Warenkorb',
+    modalTitle:'Bestellung gesendet! 🍷', modalClose:'Schließen',
+    modalText:(n,d,ti,p,tot) => `Danke ${n}! Bestellung €${tot} für ${d} um ${ti} bestätigt. Zahlung: ${p}.`,
+    errFields:'Bitte alle Pflichtfelder ausfüllen.', errPay:'Bitte Zahlungsmethode wählen.',
+    eyebrow:'Exklusive Auswahl', heroTitle:'Wine in B&amp;B',
+    heroSub:'Entdecken Sie die besten sizilianischen Weine für Ihren Aufenthalt. Aus Sizilien mit Liebe.',
+    back:'← Zurück zur Startseite',
+    ctaTitle:'Möchten Sie für Ihren Aufenthalt bestellen?',
+    ctaSub:'Wählen Sie Ihre Weine und geben Sie Ihre Bestellung auf. Zimmerlieferung bei Ihrer Ankunft.',
+    ctaBtn:'Kontaktieren Sie uns →',
+    addBtn:'Hinzufügen', priceLabel:'/ Flasche',
+  }
+};
+function t(){ return T[lang] || T.it; }
+
+// ─── CARICA VINI DA SUPABASE ──────────────────────────────────────
 async function loadWines() {
   try {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/wines?select=*&order=ordinamento.asc`,
-      {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json'
-        }
-      }
+      { headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':`Bearer ${SUPABASE_ANON_KEY}`,'Content-Type':'application/json'} }
     );
-
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const wines = await res.json();
-
     document.getElementById('winesLoading').style.display = 'none';
-
     if (!wines || wines.length === 0) {
       document.getElementById('winesError').textContent = '⚠️ Nessun vino trovato nel database.';
       document.getElementById('winesError').style.display = 'block';
       return;
     }
-
+    allWines = wines;
     renderWines(wines);
-    console.log('Vini caricati:', wines.map(w => ({nome: w.nome, immagine_url: w.immagine_url})));
-
   } catch (err) {
     console.error('Supabase error:', err);
     document.getElementById('winesLoading').style.display = 'none';
@@ -358,24 +740,26 @@ async function loadWines() {
   }
 }
 
-// ─── RENDER CARDS ───────────────────────────────────────────────
+// ─── RENDER CARDS ─────────────────────────────────────────────────
 function renderWines(wines) {
   const grid = document.getElementById('winesGrid');
   grid.innerHTML = '';
-
   wines.forEach((wine, i) => {
     const card = document.createElement('div');
     card.className = 'wine-card';
+    card.id = `wine-card-${wine.id}`;
     card.style.animationDelay = `${0.3 + i * 0.12}s`;
 
-    // Immagine reale o placeholder emoji
     let thumbHTML;
     if (wine.immagine_url) {
-      thumbHTML = `<img class="wine-thumb" src="${wine.immagine_url}" alt="${wine.nome}" loading="lazy" crossorigin="anonymous" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                   <div class="wine-thumb-placeholder" style="display:none">${TIPO_EMOJI[wine.tipo] || '🍾'}</div>`;
+      thumbHTML = `<img class="wine-thumb" src="${wine.immagine_url}" alt="${wine.nome}" loading="lazy" crossorigin="anonymous"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="wine-thumb-placeholder" style="display:none">${TIPO_EMOJI[wine.tipo] || '🍾'}</div>`;
     } else {
       thumbHTML = `<div class="wine-thumb-placeholder">${TIPO_EMOJI[wine.tipo] || '🍾'}</div>`;
     }
+
+    const inCart = cart.some(c => c.id === wine.id);
 
     card.innerHTML = `
       ${thumbHTML}
@@ -383,73 +767,215 @@ function renderWines(wines) {
         <div class="wine-badge">${wine.badge || wine.tipo || ''}</div>
         <div class="wine-name">${wine.nome}</div>
         <div class="wine-desc">${wine.descrizione || ''}</div>
-        <div class="wine-price">€ ${wine.prezzo} / bottiglia</div>
+        <div class="wine-footer">
+          <div class="wine-price">€ ${wine.prezzo} <span style="font-size:0.72rem;opacity:0.7" id="priceLabel-${wine.id}">/ bottiglia</span></div>
+          <button class="add-wine-btn${inCart?' in-cart':''}" id="addBtn-${wine.id}"
+            onclick="addToCart(${wine.id},'${wine.nome.replace(/'/g,"\\'")}',${wine.prezzo},'${TIPO_EMOJI[wine.tipo]||'🍾'}')">
+            ${inCart ? '✓' : '+'}
+          </button>
+        </div>
       </div>
     `;
 
     grid.appendChild(card);
-
-    // Trigger animazione con piccolo delay
     setTimeout(() => card.classList.add('visible'), 50);
   });
-
   grid.style.display = 'grid';
 }
 
-// ─── TRADUZIONI UI ───────────────────────────────────────────────
-const T = {
-  it: {
-    eyebrow: 'Selezione Esclusiva',
-    heroTitle: 'Wine in B&amp;B',
-    heroSub: 'Scopri i migliori vini siciliani selezionati per accompagnare il tuo soggiorno. Dalla Sicilia con amore.',
-    back: '← Torna alla Home',
-    ctaTitle: 'Vuoi ordinare per il tuo soggiorno?',
-    ctaSub: 'Contattaci almeno 24 ore prima del check-in per ricevere i vini direttamente in camera. Spedizione gratuita per soggiorni di 3+ notti.',
-    ctaBtn: 'Contattaci →'
-  },
-  en: {
-    eyebrow: 'Exclusive Selection',
-    heroTitle: 'Wine in B&amp;B',
-    heroSub: 'Discover the finest Sicilian wines selected to accompany your stay. From Sicily with love.',
-    back: '← Back to Home',
-    ctaTitle: 'Want to order for your stay?',
-    ctaSub: 'Contact us at least 24 hours before check-in to have the wines delivered to your room. Free delivery for stays of 3+ nights.',
-    ctaBtn: 'Contact us →'
-  },
-  fr: {
-    eyebrow: 'Sélection Exclusive',
-    heroTitle: 'Wine in B&amp;B',
-    heroSub: 'Découvrez les meilleurs vins siciliens sélectionnés pour accompagner votre séjour. De la Sicile avec amour.',
-    back: '← Retour à l\'Accueil',
-    ctaTitle: 'Vous souhaitez commander pour votre séjour ?',
-    ctaSub: 'Contactez-nous au moins 24 heures avant le check-in pour recevoir les vins directement dans votre chambre. Livraison gratuite pour les séjours de 3+ nuits.',
-    ctaBtn: 'Contactez-nous →'
-  },
-  de: {
-    eyebrow: 'Exklusive Auswahl',
-    heroTitle: 'Wine in B&amp;B',
-    heroSub: 'Entdecken Sie die besten sizilianischen Weine für Ihren Aufenthalt. Aus Sizilien mit Liebe.',
-    back: '← Zurück zur Startseite',
-    ctaTitle: 'Möchten Sie für Ihren Aufenthalt bestellen?',
-    ctaSub: 'Kontaktieren Sie uns mindestens 24 Stunden vor dem Check-in, um die Weine direkt aufs Zimmer liefern zu lassen. Kostenloser Versand ab 3 Übernachtungen.',
-    ctaBtn: 'Kontaktieren Sie uns →'
+// ─── CART LOGIC ───────────────────────────────────────────────────
+function addToCart(id, name, price, emoji) {
+  const already = cart.find(c => c.id === id);
+  if (already) {
+    // già nel carrello: rimuovi (toggle)
+    cart = cart.filter(c => c.id !== id);
+    updateCardBtn(id, false);
+    showToast(`${name} rimosso`);
+  } else {
+    cart.push({id, name, price, emoji});
+    updateCardBtn(id, true);
+    showToast(t().toast(name));
   }
-};
-
-function setLang(lang) {
-  const t = T[lang];
-  if (!t) return;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-  document.getElementById('eyebrow').textContent = t.eyebrow;
-  document.getElementById('heroTitle').innerHTML = t.heroTitle;
-  document.getElementById('heroSub').textContent = t.heroSub;
-  document.getElementById('ctaTitle').textContent = t.ctaTitle;
-  document.getElementById('ctaSub').textContent = t.ctaSub;
-  document.getElementById('ctaBtn').textContent = t.ctaBtn;
-  document.getElementById('backBtn').textContent = t.back;
+  updateCartUI();
 }
 
-// ─── INIT ────────────────────────────────────────────────────────
+function updateCardBtn(id, inCart) {
+  const btn = document.getElementById(`addBtn-${id}`);
+  if (!btn) return;
+  if (inCart) { btn.classList.add('in-cart'); btn.textContent = '✓'; }
+  else { btn.classList.remove('in-cart'); btn.textContent = '+'; }
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  updateCardBtn(id, false);
+  updateCartUI();
+  renderCartItems();
+}
+
+function getTotal() { return cart.reduce((s,i) => s + i.price, 0); }
+
+function updateCartUI() {
+  document.getElementById('cartCount').textContent = cart.length;
+  document.getElementById('cartTotal').textContent = `€${getTotal().toFixed(2)}`;
+  document.getElementById('proceedBtn').disabled = !cart.length;
+  renderCartItems();
+}
+
+function renderCartItems() {
+  const el = document.getElementById('cartItems');
+  if (!cart.length) {
+    el.innerHTML = `<div class="cart-empty"><div class="empty-icon">🍷</div><span>${t().cartEmpty}</span></div>`;
+    return;
+  }
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.emoji} ${item.name}</div>
+        <div class="cart-item-detail">1 bottiglia</div>
+      </div>
+      <div class="cart-item-price">€${item.price.toFixed(2)}</div>
+      <button class="cart-item-remove" onclick="removeFromCart(${item.id})">🗑</button>
+    </div>
+  `).join('');
+}
+
+// ─── CART OPEN / CLOSE ────────────────────────────────────────────
+function openCart() {
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartPanel').classList.add('open');
+  goToStep1();
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartPanel').classList.remove('open');
+}
+function goToStep1() {
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('cartTitle').textContent = t().cartTitle;
+}
+function goToStep2() {
+  if (!cart.length) return;
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  document.getElementById('cartTitle').textContent = t().formTitle;
+}
+
+// ─── PAYMENT OPTIONS RENDER ───────────────────────────────────────
+function renderPayments() {
+  const grid = document.getElementById('payOptionsGrid');
+  grid.innerHTML = PAYMENT_METHODS.map(m => `
+    <label class="pay-opt" id="payOpt-${m.id}" onclick="onPaySelect('${m.id}')">
+      <input type="radio" name="pay" value="${m.id}">
+      <span class="pay-opt-label">${m.label}</span>
+    </label>
+    <div class="pay-detail" id="pay-detail-${m.id}">${m.detail}</div>
+  `).join('');
+}
+function onPaySelect(id) {
+  selectedPay = id;
+  document.querySelectorAll('.pay-opt').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.pay-detail').forEach(el => el.style.display = 'none');
+  const opt = document.getElementById(`payOpt-${id}`);
+  const det = document.getElementById(`pay-detail-${id}`);
+  if (opt) opt.classList.add('selected');
+  if (det) det.style.display = 'block';
+}
+
+// ─── TIME SELECT ──────────────────────────────────────────────────
+function buildTimes() {
+  const sel = document.getElementById('fTime');
+  const cur = sel.value;
+  sel.innerHTML = `<option value="">${t().timePh}</option>`;
+  ALL_TIMES.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v; o.textContent = v;
+    if (v === cur) o.selected = true;
+    sel.appendChild(o);
+  });
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────
+function submitOrder() {
+  const name  = document.getElementById('fName').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  const phone = document.getElementById('fPhone').value.trim();
+  const room  = document.getElementById('fRoom').value.trim();
+  const date  = document.getElementById('fDate').value;
+  const time  = document.getElementById('fTime').value;
+  if (!name || !email || !phone || !room || !date || !time) {
+    alert(t().errFields); return;
+  }
+  if (!selectedPay) { alert(t().errPay); return; }
+  const total = getTotal().toFixed(2);
+  const payLabel = PAYMENT_METHODS.find(m => m.id === selectedPay)?.label || selectedPay;
+  document.getElementById('modalTitle').textContent = t().modalTitle;
+  document.getElementById('modalText').textContent = t().modalText(name, date, time, payLabel, total);
+  document.getElementById('modalCloseBtn').textContent = t().modalClose;
+  document.getElementById('modalOverlay').classList.add('open');
+  closeCart();
+  // Reset
+  cart = [];
+  allWines.forEach(w => updateCardBtn(w.id, false));
+  updateCartUI();
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// ─── TRADUZIONI UI ────────────────────────────────────────────────
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  document.documentElement.lang = l;
+  const tr = T[l];
+  // Header / hero
+  document.getElementById('cartLabel').textContent = tr.cartLabel;
+  document.getElementById('backBtn').textContent = tr.back;
+  document.getElementById('eyebrow').textContent = tr.eyebrow;
+  document.getElementById('heroTitle').innerHTML = tr.heroTitle;
+  document.getElementById('heroSub').textContent = tr.heroSub;
+  // CTA
+  document.getElementById('ctaTitle').textContent = tr.ctaTitle;
+  document.getElementById('ctaSub').textContent = tr.ctaSub;
+  document.getElementById('ctaBtn').textContent = tr.ctaBtn;
+  // Cart
+  document.getElementById('cartTitle').textContent = tr.cartTitle;
+  document.getElementById('totalLabel').textContent = tr.totalLabel;
+  document.getElementById('proceedText').textContent = tr.proceedText;
+  // Form
+  document.getElementById('formTitle').textContent = tr.formTitle;
+  document.getElementById('formSub').textContent = tr.formSub;
+  document.getElementById('deliveryNotice').innerHTML = tr.deliveryNotice;
+  document.getElementById('lblName').textContent = tr.lblName;
+  document.getElementById('lblEmail').textContent = tr.lblEmail;
+  document.getElementById('lblPhone').textContent = tr.lblPhone;
+  document.getElementById('lblRoom').textContent = tr.lblRoom;
+  document.getElementById('lblDate').textContent = tr.lblDate;
+  document.getElementById('lblTime').textContent = tr.lblTime;
+  document.getElementById('lblNotes').textContent = tr.lblNotes;
+  document.getElementById('lblPay').textContent = tr.lblPay;
+  document.getElementById('submitText').textContent = tr.submitText;
+  document.getElementById('backText').textContent = tr.backText;
+  buildTimes();
+  renderCartItems();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────
+renderPayments();
+buildTimes();
 loadWines();
 </script>
 </body>
