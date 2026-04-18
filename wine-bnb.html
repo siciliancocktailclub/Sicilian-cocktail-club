@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wine in B&B — Sicilian Cocktail Club</title>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --gold:#c9a84c;--gold-light:#e8c97e;
+      --dark:#0d0d0d;--dark2:#1a1a1a;--dark3:#252525;
+      --text:#f0ece4;--muted:#8a8070;--red:#c0392b;
+      --card-bg:#9CC6DE;
+    }
+    body{
+      background-color:#F9FAF7;
+      color:var(--text);
+      font-family:'PT Serif',serif;
+      font-variant:small-caps;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      position:relative;
+    }
+    body::before{
+      content:'';position:fixed;inset:0;
+      background:radial-gradient(ellipse 80% 60% at 20% 80%,rgba(201,168,76,0.07) 0%,transparent 60%),
+                 radial-gradient(ellipse 60% 50% at 80% 20%,rgba(201,168,76,0.05) 0%,transparent 55%);
+      pointer-events:none;
+    }
+    body::after{
+      content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity:0.4;pointer-events:none;
+    }
+
+    /* HEADER */
+    .site-header{
+      position:relative;z-index:1;
+      width:100%;max-width:1100px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1.4rem 2rem;
+    }
+    .logo-img{height:70px;width:auto;}
+    .back-btn{
+      display:flex;align-items:center;gap:6px;
+      text-decoration:none;
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.78rem;font-weight:700;letter-spacing:0.15em;
+      color:#0d0d0d;border:1px solid rgba(201,168,76,0.35);
+      border-radius:40px;padding:7px 16px;
+      background:#F9FAF7;
+      transition:background 0.2s,border-color 0.2s;
+    }
+    .back-btn:hover{background:rgba(201,168,76,0.12);border-color:var(--gold);}
+
+    /* HERO */
+    .hero{
+      position:relative;z-index:1;
+      width:100%;max-width:1100px;
+      padding:0 2rem 3rem;
+      text-align:center;
+      animation:fadeUp 0.9s 0.05s ease both;opacity:0;
+    }
+    .hero-eyebrow{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.75rem;letter-spacing:0.35em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:1rem;
+    }
+    .hero-title{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:clamp(2rem,5vw,3.4rem);font-weight:700;
+      color:#EEBE2C;line-height:1.15;margin-bottom:0.8rem;
+    }
+    .hero-sub{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.95rem;color:var(--muted);
+      max-width:560px;margin:0 auto 1.8rem;line-height:1.7;
+    }
+    .divider{width:48px;height:1px;background:var(--gold);margin:0 auto 2.4rem;}
+
+    /* WINE CARDS GRID */
+    .wines-grid{
+      position:relative;z-index:1;
+      width:100%;max-width:1100px;
+      padding:0 2rem 4rem;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.4rem;
+    }
+    @media(max-width:760px){.wines-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:520px){.wines-grid{grid-template-columns:1fr;}}
+
+    .wine-card{
+      background:var(--card-bg);
+      border:1px solid rgba(201,168,76,0.18);
+      border-radius:2px;padding:2.2rem 1.6rem;
+      cursor:pointer;position:relative;
+      transition:border-color 0.3s,transform 0.3s,background 0.3s;
+      opacity:0;
+      text-decoration:none;display:block;
+    }
+    .wine-card:nth-child(1){animation:fadeUp 0.9s 0.3s ease both;}
+    .wine-card:nth-child(2){animation:fadeUp 0.9s 0.42s ease both;}
+    .wine-card:nth-child(3){animation:fadeUp 0.9s 0.54s ease both;}
+    .wine-card:nth-child(4){animation:fadeUp 0.9s 0.66s ease both;}
+    .wine-card:nth-child(5){animation:fadeUp 0.9s 0.78s ease both;}
+    .wine-card:nth-child(6){animation:fadeUp 0.9s 0.90s ease both;}
+    .wine-card::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(201,168,76,0.06) 0%,transparent 60%);
+      opacity:0;transition:opacity 0.3s;
+    }
+    .wine-card:hover{border-color:rgba(201,168,76,0.55);background:#8ab8d0;transform:translateY(-4px);}
+    .wine-card:hover::before{opacity:1;}
+
+    .wine-emoji{font-size:2rem;margin-bottom:0.9rem;display:block;transition:transform 0.3s;}
+    .wine-card:hover .wine-emoji{transform:scale(1.12);}
+
+    .wine-type{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:0.4rem;
+    }
+    .wine-name{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:1.15rem;font-weight:700;color:var(--text);
+      margin-bottom:0.45rem;line-height:1.3;
+    }
+    .wine-desc{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.78rem;font-weight:700;letter-spacing:0.05em;
+      color:var(--muted);line-height:1.5;margin-bottom:1.1rem;
+    }
+    .wine-price{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:1rem;font-weight:700;color:var(--gold);
+    }
+    .wine-badge{
+      display:inline-block;
+      background:rgba(201,168,76,0.15);
+      border:1px solid rgba(201,168,76,0.3);
+      border-radius:20px;padding:3px 10px;
+      font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:0.8rem;
+    }
+
+    /* CTA SECTION */
+    .cta-section{
+      position:relative;z-index:1;
+      width:100%;max-width:700px;
+      padding:0 2rem 5rem;
+      text-align:center;
+      animation:fadeUp 0.9s 1s ease both;opacity:0;
+    }
+    .cta-box{
+      background:var(--card-bg);
+      border:1px solid rgba(201,168,76,0.25);
+      border-radius:4px;padding:2.5rem 2rem;
+    }
+    .cta-title{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:1.4rem;font-weight:700;color:var(--text);
+      margin-bottom:0.6rem;
+    }
+    .cta-sub{
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.82rem;font-weight:700;letter-spacing:0.05em;
+      color:var(--muted);line-height:1.6;margin-bottom:1.6rem;
+    }
+    .cta-btn{
+      display:inline-block;
+      background:var(--gold);color:#0d0d0d;
+      text-decoration:none;
+      font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.82rem;font-weight:700;letter-spacing:0.2em;
+      padding:14px 32px;border-radius:2px;
+      transition:background 0.25s,letter-spacing 0.25s;
+    }
+    .cta-btn:hover{background:var(--gold-light);letter-spacing:0.28em;}
+
+    /* LANGUAGE SWITCHER */
+    .lang-switcher{
+      position:fixed;top:18px;right:18px;z-index:100;
+      display:flex;align-items:center;gap:6px;
+      background:#F9FAF7;border:1px solid rgba(201,168,76,0.25);
+      border-radius:40px;padding:7px 14px;backdrop-filter:blur(8px);
+    }
+    .lang-btn{
+      display:flex;align-items:center;gap:6px;padding:5px 10px;
+      border-radius:20px;border:none;background:transparent;
+      color:#0d0d0d;font-family:'PT Serif',serif;font-variant:small-caps;
+      font-size:0.8rem;font-weight:700;letter-spacing:0.1em;
+      cursor:pointer;transition:background 0.2s;
+    }
+    .lang-btn:hover{background:rgba(201,168,76,0.15);}
+    .lang-btn.active{background:var(--gold);color:#0d0d0d;}
+    .lang-divider{width:1px;height:18px;background:rgba(201,168,76,0.25);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+  </style>
+</head>
+<body>
+
+<!-- LANGUAGE SWITCHER -->
+<div class="lang-switcher">
+  <button class="lang-btn active" data-lang="it" onclick="setLang('it')"><span>🇮🇹</span> IT</button>
+  <div class="lang-divider"></div>
+  <button class="lang-btn" data-lang="en" onclick="setLang('en')"><span>🇬🇧</span> EN</button>
+  <div class="lang-divider"></div>
+  <button class="lang-btn" data-lang="fr" onclick="setLang('fr')"><span>🇫🇷</span> FR</button>
+  <div class="lang-divider"></div>
+  <button class="lang-btn" data-lang="de" onclick="setLang('de')"><span>🇩🇪</span> DE</button>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <img class="logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HSuDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAAYdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCA1LjEuOBtp6qgAAAC2ZVhJZklJKgAIAAAABQAaAQUAAQAAAEoAAAAbAQUAAQAAAFIAAAAoAQMAAQAAAAIAAAAxAQIAEAAAAFoAAABphwQAAQAAAGoAAAAAAAAA8nYBAOgDAADydgEA6AMAAFBhaW50Lk5FVCA1LjEuOAADAACQBwAEAAAAMDIzMAGgAwABAAAAAQAAAAWgBAABAAAAlAAAAAAAAAACAAEAAgAEAAAAUjk4AAIABwAEAAAAMDEwMAAAAADMbhZ8SlPoHAAA/r9JREFUeF7..." alt="Sicilian Cocktail Club" onerror="this.style.display='none'">
+  <a class="back-btn" href="index.html">← Torna alla Home</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow" id="eyebrow">Selezione Esclusiva</p>
+  <h1 class="hero-title" id="heroTitle">Wine in B&amp;B</h1>
+  <p class="hero-sub" id="heroSub">Scopri i migliori vini siciliani selezionati per accompagnare il tuo soggiorno. Dalla Sicilia con amore.</p>
+  <div class="divider"></div>
+</section>
+
+<!-- WINES GRID -->
+<section class="wines-grid">
+
+  <div class="wine-card">
+    <span class="wine-emoji">🍷</span>
+    <div class="wine-badge" id="badge-rosso">Vino Rosso</div>
+    <div class="wine-name">Nero d'Avola DOC</div>
+    <div class="wine-desc">Uva autoctona siciliana, note di ciliegia nera, spezie e cacao. Corposo ed elegante.</div>
+    <div class="wine-price">€ 24 / bottiglia</div>
+  </div>
+
+  <div class="wine-card">
+    <span class="wine-emoji">🥂</span>
+    <div class="wine-badge" id="badge-bianco">Vino Bianco</div>
+    <div class="wine-name">Grillo IGT</div>
+    <div class="wine-desc">Fresco e aromatico, sentori di agrumi e fiori bianchi. Ideale con pesce e frutti di mare.</div>
+    <div class="wine-price">€ 20 / bottiglia</div>
+  </div>
+
+  <div class="wine-card">
+    <span class="wine-emoji">🌹</span>
+    <div class="wine-badge" id="badge-rose">Rosato</div>
+    <div class="wine-name">Cerasuolo di Vittoria</div>
+    <div class="wine-desc">Colore rosato brillante, delicato bouquet fruttato. Perfetto per ogni occasione.</div>
+    <div class="wine-price">€ 22 / bottiglia</div>
+  </div>
+
+  <div class="wine-card">
+    <span class="wine-emoji">✨</span>
+    <div class="wine-badge" id="badge-dolce">Vino Dolce</div>
+    <div class="wine-name">Marsala Superiore</div>
+    <div class="wine-desc">Il grande classico siciliano. Note di frutta secca, miele e vaniglia. Da dessert o aperitivo.</div>
+    <div class="wine-price">€ 28 / bottiglia</div>
+  </div>
+
+  <div class="wine-card">
+    <span class="wine-emoji">⚡</span>
+    <div class="wine-badge" id="badge-spumante">Spumante</div>
+    <div class="wine-name">Etna Brut DOC</div>
+    <div class="wine-desc">Bollicine vulcaniche dall'Etna. Fresco, minerale, con perlage fine e persistente.</div>
+    <div class="wine-price">€ 26 / bottiglia</div>
+  </div>
+
+  <div class="wine-card">
+    <span class="wine-emoji">🏆</span>
+    <div class="wine-badge" id="badge-premium">Selezione Premium</div>
+    <div class="wine-name">Etna Rosso DOC</div>
+    <div class="wine-desc">Nerello Mascalese in purezza. Vino di territorio, elegante e longevo. La perla dell'Etna.</div>
+    <div class="wine-price">€ 38 / bottiglia</div>
+  </div>
+
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-box">
+    <div class="cta-title" id="ctaTitle">Vuoi ordinare per il tuo soggiorno?</div>
+    <div class="cta-sub" id="ctaSub">Contattaci almeno 24 ore prima del check-in per ricevere i vini direttamente in camera. Spedizione gratuita per soggiorni di 3+ notti.</div>
+    <a class="cta-btn" href="mailto:wine@siciliancocktailclub.it" id="ctaBtn">Contattaci →</a>
+  </div>
+</section>
+
+<script>
+const T = {
+  it: {
+    eyebrow: 'Selezione Esclusiva',
+    heroTitle: 'Wine in B&amp;B',
+    heroSub: 'Scopri i migliori vini siciliani selezionati per accompagnare il tuo soggiorno. Dalla Sicilia con amore.',
+    back: '← Torna alla Home',
+    'badge-rosso': 'Vino Rosso','badge-bianco': 'Vino Bianco','badge-rose': 'Rosato',
+    'badge-dolce': 'Vino Dolce','badge-spumante': 'Spumante','badge-premium': 'Selezione Premium',
+    ctaTitle: 'Vuoi ordinare per il tuo soggiorno?',
+    ctaSub: 'Contattaci almeno 24 ore prima del check-in per ricevere i vini direttamente in camera. Spedizione gratuita per soggiorni di 3+ notti.',
+    ctaBtn: 'Contattaci →'
+  },
+  en: {
+    eyebrow: 'Exclusive Selection',
+    heroTitle: 'Wine in B&amp;B',
+    heroSub: 'Discover the finest Sicilian wines selected to accompany your stay. From Sicily with love.',
+    back: '← Back to Home',
+    'badge-rosso': 'Red Wine','badge-bianco': 'White Wine','badge-rose': 'Rosé',
+    'badge-dolce': 'Dessert Wine','badge-spumante': 'Sparkling','badge-premium': 'Premium Selection',
+    ctaTitle: 'Want to order for your stay?',
+    ctaSub: 'Contact us at least 24 hours before check-in to have the wines delivered to your room. Free delivery for stays of 3+ nights.',
+    ctaBtn: 'Contact us →'
+  },
+  fr: {
+    eyebrow: 'Sélection Exclusive',
+    heroTitle: 'Wine in B&amp;B',
+    heroSub: 'Découvrez les meilleurs vins siciliens sélectionnés pour accompagner votre séjour. De la Sicile avec amour.',
+    back: '← Retour à l\'Accueil',
+    'badge-rosso': 'Vin Rouge','badge-bianco': 'Vin Blanc','badge-rose': 'Rosé',
+    'badge-dolce': 'Vin Doux','badge-spumante': 'Pétillant','badge-premium': 'Sélection Premium',
+    ctaTitle: 'Vous souhaitez commander pour votre séjour ?',
+    ctaSub: 'Contactez-nous au moins 24 heures avant le check-in pour recevoir les vins directement dans votre chambre. Livraison gratuite pour les séjours de 3+ nuits.',
+    ctaBtn: 'Contactez-nous →'
+  },
+  de: {
+    eyebrow: 'Exklusive Auswahl',
+    heroTitle: 'Wine in B&amp;B',
+    heroSub: 'Entdecken Sie die besten sizilianischen Weine für Ihren Aufenthalt. Aus Sizilien mit Liebe.',
+    back: '← Zurück zur Startseite',
+    'badge-rosso': 'Rotwein','badge-bianco': 'Weißwein','badge-rose': 'Roséwein',
+    'badge-dolce': 'Dessertwein','badge-spumante': 'Sekt','badge-premium': 'Premium-Auswahl',
+    ctaTitle: 'Möchten Sie für Ihren Aufenthalt bestellen?',
+    ctaSub: 'Kontaktieren Sie uns mindestens 24 Stunden vor dem Check-in, um die Weine direkt aufs Zimmer liefern zu lassen. Kostenloser Versand ab 3 Übernachtungen.',
+    ctaBtn: 'Kontaktieren Sie uns →'
+  }
+};
+
+function setLang(lang) {
+  const t = T[lang];
+  if (!t) return;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  const ids = ['eyebrow','heroTitle','ctaTitle','ctaSub','ctaBtn',
+    'badge-rosso','badge-bianco','badge-rose','badge-dolce','badge-spumante','badge-premium'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && t[id]) el.innerHTML = t[id];
+  });
+  const backBtn = document.querySelector('.back-btn');
+  if (backBtn && t.back) backBtn.textContent = t.back;
+  const heroSub = document.getElementById('heroSub');
+  if (heroSub && t.heroSub) heroSub.textContent = t.heroSub;
+}
+</script>
+</body>
+</html>
