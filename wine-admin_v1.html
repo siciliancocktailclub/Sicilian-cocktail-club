@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wine Admin — Sicilian Cocktail Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#EEBE2C;--gold-light:#f5d263;--blue:#7ab8d4;
+  --dark:#F9FAF7;--dark2:#F0F2EE;--dark3:#E8EBE4;
+  --text:#1a1a1a;--muted:#5a6070;--red:#c0392b;--success:#4caf7d;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#1a1a1a;color:var(--text);font-family:'Lato',sans-serif;font-weight:300;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 16px 60px;}
+
+/* ── LOGIN ── */
+.login-wrap{width:100%;max-width:360px;margin-top:60px;}
+.login-box{background:var(--dark2);border:1px solid #d0d4cc;border-radius:14px;padding:36px 30px;text-align:center;}
+.login-box h1{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.5rem;margin-bottom:6px;}
+.login-box p{color:var(--muted);font-size:0.82rem;margin-bottom:22px;}
+.login-input{width:100%;background:var(--dark3);border:1px solid #d0d4cc;border-radius:7px;padding:12px 14px;color:var(--text);font-family:'Lato',sans-serif;font-size:1rem;outline:none;text-align:center;letter-spacing:3px;margin-bottom:14px;}
+.login-input:focus{border-color:var(--gold);}
+.login-btn{width:100%;padding:13px;background:var(--gold);color:#1a1a1a;border:none;border-radius:7px;font-family:'Lato',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:background 0.2s;}
+.login-btn:hover{background:var(--gold-light);}
+.login-err{color:var(--red);font-size:0.78rem;margin-top:10px;display:none;}
+
+/* ── ADMIN PANEL ── */
+.admin-wrap{display:none;width:100%;max-width:700px;}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;flex-wrap:wrap;gap:12px;}
+.admin-header h1{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.4rem;}
+.admin-header-right{display:flex;gap:10px;align-items:center;}
+.btn-save{background:var(--gold);color:#1a1a1a;border:none;padding:10px 22px;border-radius:7px;font-family:'Lato',sans-serif;font-weight:700;font-size:0.87rem;cursor:pointer;transition:background 0.2s;}
+.btn-save:hover{background:var(--gold-light);}
+.btn-save:disabled{opacity:0.5;cursor:not-allowed;}
+.btn-logout{background:transparent;color:var(--muted);border:1px solid #555;padding:8px 16px;border-radius:7px;font-family:'Lato',sans-serif;font-size:0.8rem;cursor:pointer;}
+.btn-logout:hover{color:var(--gold);border-color:var(--gold);}
+
+/* ── STATUS BAR ── */
+.status-bar{background:var(--dark2);border:1px solid #d0d4cc;border-radius:8px;padding:10px 16px;font-size:0.8rem;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.status-bar.ok{border-color:var(--success);color:var(--success);}
+.status-bar.err{border-color:var(--red);color:var(--red);}
+.status-bar.loading{border-color:var(--gold);color:var(--gold);}
+
+/* ── WINE CARD ── */
+.wine-item{background:var(--dark2);border:1px solid #c8ccc5;border-radius:10px;margin-bottom:12px;overflow:hidden;transition:border-color 0.2s;}
+.wine-item.disabled-item{opacity:0.55;}
+.wine-header{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--dark3);cursor:pointer;user-select:none;}
+.wine-header:hover{background:#dde0db;}
+.wine-toggle-wrap{flex-shrink:0;}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;inset:0;background:#aaa;border-radius:24px;cursor:pointer;transition:background 0.2s;}
+.toggle-slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform 0.2s;}
+.toggle input:checked+.toggle-slider{background:var(--success);}
+.toggle input:checked+.toggle-slider:before{transform:translateX(20px);}
+.wine-title-wrap{flex:1;min-width:0;}
+.wine-name{font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wine-badge-small{font-size:0.68rem;color:var(--muted);margin-top:2px;}
+.wine-price-display{font-weight:700;color:var(--gold);font-size:0.95rem;white-space:nowrap;}
+.wine-expand-icon{color:var(--muted);font-size:0.8rem;transition:transform 0.2s;flex-shrink:0;}
+.wine-body{display:none;padding:14px 16px;border-top:1px solid #d0d4cc;}
+.wine-body.open{display:block;}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;}
+.field-single{margin-bottom:10px;}
+.field-label{font-size:0.65rem;color:var(--muted);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:4px;display:block;}
+.field-input{width:100%;background:var(--dark);border:1px solid #d0d4cc;border-radius:6px;padding:8px 10px;color:var(--text);font-family:'Lato',sans-serif;font-size:0.85rem;outline:none;transition:border-color 0.2s;}
+.field-input:focus{border-color:var(--gold);}
+.field-input[type="number"]{-moz-appearance:textfield;}
+.field-input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;}
+.field-note{font-size:0.7rem;color:var(--muted);margin-top:4px;}
+
+/* sweetness bar preview */
+.sweet-preview{margin-top:6px;font-size:0.75rem;color:var(--muted);}
+.sweet-dots{letter-spacing:2px;}
+
+/* ── ADD NEW WINE ── */
+.add-wine-btn{width:100%;padding:13px;background:transparent;border:2px dashed #555;border-radius:10px;color:var(--muted);font-family:'Lato',sans-serif;font-size:0.85rem;cursor:pointer;transition:all 0.2s;margin-top:4px;}
+.add-wine-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ── SAVE OVERLAY ── */
+.save-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;}
+.save-overlay.open{display:flex;}
+.save-spinner{background:var(--dark2);border:1px solid #d0d4cc;border-radius:12px;padding:28px 36px;text-align:center;}
+.save-spinner p{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem;margin-top:10px;}
+.spinner{width:32px;height:32px;border:3px solid #d0d4cc;border-top-color:var(--gold);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:#555;border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <h1>🍷 Wine Admin</h1>
+    <p>Inserisci la password per accedere al pannello</p>
+    <input class="login-input" type="password" id="pwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Accedi</button>
+    <p class="login-err" id="loginErr">Password errata. Riprova.</p>
+  </div>
+</div>
+
+<!-- ── ADMIN PANEL ── -->
+<div class="admin-wrap" id="adminWrap">
+  <div class="admin-header">
+    <h1>🍷 Wine Admin</h1>
+    <div class="admin-header-right">
+      <button class="btn-save" id="btnSave" onclick="saveAll()">💾 Salva su Supabase</button>
+      <button class="btn-logout" onclick="doLogout()">Esci</button>
+    </div>
+  </div>
+
+  <div class="status-bar" id="statusBar">⏳ Caricamento vini da Supabase…</div>
+
+  <div id="wineList"></div>
+
+  <button class="add-wine-btn" onclick="addNewWine()">＋ Aggiungi nuovo vino</button>
+</div>
+
+<!-- ── SAVE OVERLAY ── -->
+<div class="save-overlay" id="saveOverlay">
+  <div class="save-spinner">
+    <div class="spinner"></div>
+    <p>Salvataggio in corso…</p>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://rvxfebnlntataowfvpcq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2eGZlYm5sbnRhdGFvd2Z2cGNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0Nzk2MjMsImV4cCI6MjA5MjA1NTYyM30.3ayahnL42tkFnBIrrJpJ2pEyfNz38wqkh5ktQux0GJ4';
+const ADMIN_PWD   = 'sicilian2025';
+
+let wines = [];
+
+// ── LOGIN ──
+function doLogin(){
+  const v = document.getElementById('pwdInput').value.trim();
+  if(v === ADMIN_PWD){
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('adminWrap').style.display = 'block';
+    loadWines();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+function doLogout(){
+  document.getElementById('adminWrap').style.display = 'none';
+  document.getElementById('loginWrap').style.display = 'block';
+  document.getElementById('pwdInput').value = '';
+  document.getElementById('loginErr').style.display = 'none';
+}
+
+// ── LOAD FROM SUPABASE ──
+async function loadWines(){
+  setStatus('loading','⏳ Caricamento vini da Supabase…');
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/wines?select=*&order=ordinamento.asc`, {
+      headers:{
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    wines = await res.json();
+    // ensure attivo field exists
+    wines = wines.map(w => ({...w, attivo: w.attivo !== false}));
+    renderList();
+    setStatus('ok', `✅ ${wines.length} vini caricati. Modifica e premi "Salva su Supabase".`);
+  } catch(e){
+    setStatus('err', '❌ Errore caricamento: ' + e.message);
+  }
+}
+
+// ── RENDER ──
+function renderList(){
+  const container = document.getElementById('wineList');
+  container.innerHTML = '';
+  wines.forEach((w, idx) => {
+    container.appendChild(buildCard(w, idx));
+  });
+}
+
+function buildCard(w, idx){
+  const div = document.createElement('div');
+  div.className = 'wine-item' + (w.attivo === false ? ' disabled-item' : '');
+  div.id = `wine-card-${idx}`;
+
+  const sweetDots = makeDots(w.tipo || 5);
+
+  div.innerHTML = `
+    <div class="wine-header" onclick="toggleBody(${idx})">
+      <div class="wine-toggle-wrap" onclick="event.stopPropagation()">
+        <label class="toggle" title="${w.attivo!==false?'Attivo — clicca per disattivare':'Disattivato — clicca per attivare'}">
+          <input type="checkbox" id="chk-${idx}" ${w.attivo!==false?'checked':''} onchange="toggleActive(${idx},this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="wine-title-wrap">
+        <div class="wine-name">${w.nome||'Nuovo vino'}</div>
+        <div class="wine-badge-small">${w.badge||''} ${w.tipo?'· dolcezza '+w.tipo+'/10':''}</div>
+      </div>
+      <div class="wine-price-display">€${w.prezzo!=null?Number(w.prezzo).toFixed(2):'—'}</div>
+      <span class="wine-expand-icon" id="icon-${idx}">▼</span>
+    </div>
+    <div class="wine-body" id="body-${idx}">
+      <div class="field-row">
+        <div>
+          <label class="field-label">Nome vino *</label>
+          <input class="field-input" id="f-nome-${idx}" value="${esc(w.nome||'')}" oninput="updateField(${idx},'nome',this.value)">
+        </div>
+        <div>
+          <label class="field-label">Badge / Categoria</label>
+          <input class="field-input" id="f-badge-${idx}" value="${esc(w.badge||'')}" placeholder="es. Vino Rosso" oninput="updateField(${idx},'badge',this.value)">
+        </div>
+      </div>
+      <div class="field-row-3">
+        <div>
+          <label class="field-label">Prezzo (€) *</label>
+          <input class="field-input" type="number" step="0.01" min="0" id="f-prezzo-${idx}" value="${w.prezzo!=null?w.prezzo:''}" oninput="updateField(${idx},'prezzo',parseFloat(this.value)||0)">
+        </div>
+        <div>
+          <label class="field-label">Dolcezza (1–10)</label>
+          <input class="field-input" type="number" min="1" max="10" id="f-tipo-${idx}" value="${w.tipo||''}" placeholder="1=Secco 10=Dolce" oninput="updateField(${idx},'tipo',parseInt(this.value)||null);updateDots(${idx},this.value)">
+          <div class="sweet-preview"><span class="sweet-dots" id="dots-${idx}">${sweetDots}</span></div>
+        </div>
+        <div>
+          <label class="field-label">Ordinamento</label>
+          <input class="field-input" type="number" min="0" id="f-ord-${idx}" value="${w.ordinamento!=null?w.ordinamento:idx+1}" oninput="updateField(${idx},'ordinamento',parseInt(this.value)||idx+1)">
+          <p class="field-note">Numero più basso = appare prima</p>
+        </div>
+      </div>
+      <div class="field-single">
+        <label class="field-label">Descrizione</label>
+        <input class="field-input" id="f-desc-${idx}" value="${esc(w.descrizione||'')}" placeholder="Breve descrizione del vino…" oninput="updateField(${idx},'descrizione',this.value)">
+      </div>
+      <div class="field-single">
+        <label class="field-label">URL immagine</label>
+        <input class="field-input" id="f-img-${idx}" value="${esc(w.immagine_url||'')}" placeholder="https://…" oninput="updateField(${idx},'immagine_url',this.value)">
+      </div>
+      ${w._isNew ? `<button onclick="removeNewWine(${idx})" style="margin-top:8px;background:transparent;border:1px solid var(--red);color:var(--red);border-radius:6px;padding:6px 14px;font-size:0.78rem;cursor:pointer;">🗑 Rimuovi (non ancora salvato)</button>` : ''}
+    </div>
+  `;
+  return div;
+}
+
+function makeDots(val){
+  const v = Math.max(1,Math.min(10,parseInt(val)||5));
+  return '●'.repeat(v) + '○'.repeat(10-v);
+}
+
+function esc(s){ return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function toggleBody(idx){
+  const body = document.getElementById(`body-${idx}`);
+  const icon = document.getElementById(`icon-${idx}`);
+  body.classList.toggle('open');
+  icon.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+function toggleActive(idx, checked){
+  wines[idx].attivo = checked;
+  const card = document.getElementById(`wine-card-${idx}`);
+  if(checked) card.classList.remove('disabled-item');
+  else card.classList.add('disabled-item');
+}
+
+function updateField(idx, field, val){
+  wines[idx][field] = val;
+  // update header live
+  if(field==='nome'){
+    const el = document.querySelector(`#wine-card-${idx} .wine-name`);
+    if(el) el.textContent = val || 'Nuovo vino';
+  }
+  if(field==='prezzo'){
+    const el = document.querySelector(`#wine-card-${idx} .wine-price-display`);
+    if(el) el.textContent = '€' + (isNaN(val)?'—':Number(val).toFixed(2));
+  }
+  if(field==='badge'||field==='tipo'){
+    const el = document.querySelector(`#wine-card-${idx} .wine-badge-small`);
+    if(el) el.textContent = (wines[idx].badge||'') + (wines[idx].tipo?' · dolcezza '+wines[idx].tipo+'/10':'');
+  }
+}
+
+function updateDots(idx, val){
+  const el = document.getElementById(`dots-${idx}`);
+  if(el) el.textContent = makeDots(val);
+}
+
+// ── ADD NEW ──
+let newCounter = 0;
+function addNewWine(){
+  newCounter++;
+  const w = {
+    id: null,
+    nome: '',
+    badge: '',
+    prezzo: null,
+    tipo: 5,
+    descrizione: '',
+    immagine_url: '',
+    ordinamento: wines.length + newCounter,
+    attivo: true,
+    _isNew: true
+  };
+  wines.push(w);
+  const idx = wines.length - 1;
+  const container = document.getElementById('wineList');
+  container.appendChild(buildCard(w, idx));
+  // auto-open
+  setTimeout(()=>toggleBody(idx), 50);
+  window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+}
+
+function removeNewWine(idx){
+  wines.splice(idx, 1);
+  renderList();
+}
+
+// ── SAVE ALL TO SUPABASE ──
+async function saveAll(){
+  document.getElementById('saveOverlay').classList.add('open');
+  document.getElementById('btnSave').disabled = true;
+
+  const headers = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  };
+
+  let errors = [];
+
+  for(const w of wines){
+    const payload = {
+      nome: w.nome,
+      badge: w.badge || null,
+      prezzo: w.prezzo != null ? Number(w.prezzo) : null,
+      tipo: w.tipo != null ? Number(w.tipo) : null,
+      descrizione: w.descrizione || null,
+      immagine_url: w.immagine_url || null,
+      ordinamento: w.ordinamento != null ? Number(w.ordinamento) : null,
+      attivo: w.attivo !== false
+    };
+
+    try {
+      if(w._isNew){
+        // INSERT
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/wines`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(payload)
+        });
+        if(!res.ok){
+          const err = await res.text();
+          errors.push(`INSERT "${w.nome}": ${err}`);
+        } else {
+          const data = await res.json();
+          if(data && data[0]) w.id = data[0].id;
+          delete w._isNew;
+        }
+      } else {
+        // UPDATE
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/wines?id=eq.${w.id}`, {
+          method: 'PATCH',
+          headers,
+          body: JSON.stringify(payload)
+        });
+        if(!res.ok){
+          const err = await res.text();
+          errors.push(`UPDATE "${w.nome}" (id ${w.id}): ${err}`);
+        }
+      }
+    } catch(e){
+      errors.push(`"${w.nome}": ${e.message}`);
+    }
+  }
+
+  document.getElementById('saveOverlay').classList.remove('open');
+  document.getElementById('btnSave').disabled = false;
+
+  if(errors.length === 0){
+    setStatus('ok', `✅ Tutti i ${wines.length} vini salvati su Supabase con successo!`);
+    // re-render to remove _isNew flags
+    renderList();
+  } else {
+    setStatus('err', `⚠️ ${errors.length} errori: ` + errors.join(' | '));
+    console.error('Save errors:', errors);
+  }
+}
+
+// ── STATUS ──
+function setStatus(type, msg){
+  const el = document.getElementById('statusBar');
+  el.className = 'status-bar ' + type;
+  el.textContent = msg;
+}
+
+// enter key on login
+document.getElementById('pwdInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') doLogin();
+});
+</script>
+</body>
+</html>
