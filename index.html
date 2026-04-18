@@ -17,11 +17,13 @@
     h1{font-family:'PT Serif',serif;font-variant:small-caps;font-size:clamp(2.2rem,6vw,3.8rem);font-weight:700;line-height:1.15;color:#EEBE2C;margin-bottom:0.4rem;opacity:0;animation:fadeUp 0.9s 0.2s ease both;}
     h1 em{font-style:normal;font-variant:small-caps;color:#EEBE2C;}
     .divider{width:48px;height:1px;background:var(--gold);margin:1.8rem auto;opacity:0;animation:fadeUp 0.9s 0.3s ease both;}
-    .cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:0.5rem;}
+    .cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;margin-top:0.5rem;}
+    @media(max-width:760px){.cards{grid-template-columns:1fr 1fr;}}
     @media(max-width:520px){.cards{grid-template-columns:1fr;}}
     .card{display:block;text-decoration:none;background:#9CC6DE;border:1px solid rgba(201,168,76,0.18);border-radius:2px;padding:2.4rem 1.8rem;cursor:pointer;position:relative;transition:border-color 0.3s,transform 0.3s,background 0.3s;opacity:0;}
     .card:nth-child(1){animation:fadeUp 0.9s 0.45s ease both;}
     .card:nth-child(2){animation:fadeUp 0.9s 0.6s ease both;}
+    .card:nth-child(3){animation:fadeUp 0.9s 0.75s ease both;}
     .card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,0.06) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;}
     .card:hover{border-color:rgba(201,168,76,0.55);background:#8ab8d0;transform:translateY(-4px);}
     .card:hover::before{opacity:1;}
@@ -105,6 +107,12 @@
       <span class="card-icon" id="icon2">🎓</span>
       <div class="card-title" id="title2">Prenotare una Masterclass</div>
       <div class="card-sub" id="sub2">Impara l'arte dei cocktail con i nostri esperti bartender</div>
+      <span class="card-arrow">Scopri →</span>
+    </a>
+    <a class="card" href="wine-bnb.html">
+      <span class="card-icon" id="icon3">🍷</span>
+      <div class="card-title" id="title3">Wine in B&amp;B</div>
+      <div class="card-sub" id="sub3">Scopri i migliori vini siciliani selezionati per il tuo soggiorno</div>
       <span class="card-arrow">Scopri →</span>
     </a>
   </div>
@@ -313,6 +321,8 @@ const translations = {
     sub1: 'Ricevi i tuoi cocktail preferiti direttamente a casa tua',
     title2: 'Prenotare una Masterclass',
     sub2: "Impara l'arte dei cocktail con i nostri esperti bartender",
+    title3: 'Wine in B&B',
+    sub3: 'Scopri i migliori vini siciliani selezionati per il tuo soggiorno',
     arrow: 'Scopri →',
     adminTitle: '🔧 Pannello Admin — Homepage',
     pwdTitle: 'Area Riservata',
@@ -343,6 +353,8 @@ const translations = {
     sub1: 'Receive your favourite cocktails delivered directly to your door',
     title2: 'Book a Masterclass',
     sub2: 'Learn the art of cocktails with our expert bartenders',
+    title3: 'Wine in B&B',
+    sub3: 'Discover the finest Sicilian wines selected for your stay',
     arrow: 'Discover →',
     adminTitle: '🔧 Admin Panel — Homepage',
     pwdTitle: 'Restricted Area',
@@ -373,6 +385,8 @@ const translations = {
     sub1: 'Recevez vos cocktails préférés directement chez vous',
     title2: 'Réserver une Masterclass',
     sub2: "Apprenez l'art des cocktails avec nos bartenders experts",
+    title3: 'Wine in B&B',
+    sub3: 'Découvrez les meilleurs vins siciliens sélectionnés pour votre séjour',
     arrow: 'Découvrir →',
     adminTitle: '🔧 Panneau Admin — Page d\'accueil',
     pwdTitle: 'Espace Réservé',
@@ -403,6 +417,8 @@ const translations = {
     sub1: 'Erhalten Sie Ihre Lieblingscocktails direkt nach Hause geliefert',
     title2: 'Eine Masterclass buchen',
     sub2: 'Lernen Sie die Kunst der Cocktails mit unseren Experten-Bartendern',
+    title3: 'Wine in B&B',
+    sub3: 'Entdecken Sie die besten sizilianischen Weine für Ihren Aufenthalt',
     arrow: 'Entdecken →',
     adminTitle: '🔧 Admin-Panel — Homepage',
     pwdTitle: 'Gesicherter Bereich',
@@ -442,6 +458,8 @@ function setLang(lang) {
   setTxt('sub1', t.sub1);
   setTxt('title2', t.title2);
   setTxt('sub2', t.sub2);
+  setTxt('title3', t.title3);
+  setTxt('sub3', t.sub3);
 
   // Update card arrows
   document.querySelectorAll('.card-arrow').forEach(el => el.textContent = t.arrow);
