@@ -371,7 +371,7 @@ function renderWines(wines) {
     // Immagine reale o placeholder emoji
     let thumbHTML;
     if (wine.immagine_url) {
-      thumbHTML = `<img class="wine-thumb" src="${wine.immagine_url}" alt="${wine.nome}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      thumbHTML = `<img class="wine-thumb" src="${wine.immagine_url}" alt="${wine.nome}" loading="lazy" crossorigin="anonymous" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                    <div class="wine-thumb-placeholder" style="display:none">${TIPO_EMOJI[wine.tipo] || '🍾'}</div>`;
     } else {
       thumbHTML = `<div class="wine-thumb-placeholder">${TIPO_EMOJI[wine.tipo] || '🍾'}</div>`;
